@@ -1,12 +1,4 @@
+#!/bin/bash
 ngx_addon_name=ngx_http_nginx_internals_module
 HTTP_MODULES="$HTTP_MODULES ngx_http_nginx_internals_module"
 NGX_ADDON_SRCS="$NGX_ADDON_SRCS $ngx_addon_dir/ngx_http_nginx_internals_module.c"
-
-# Disgusting hack to insert /lua-nginx-module/src into the core include path
-read -r -a inc_array <<< "$CORE_INCS"
-for i in "${inc_array[@]}"; do
-  if echo $i | grep -E "lua-nginx-module.*\/api$" > /dev/null; then
-    LUA_MODULE_INC=${i%/api}
-  fi
-done
-CORE_INCS="$CORE_INCS $LUA_MODULE_INC"
